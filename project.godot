@@ -1,0 +1,47 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Cubekit"
+config/version="1.0"
+run/main_scene="res://scenes/jar_download/jar_download.tscn"
+config/use_hidden_project_data_directory=false
+config/use_custom_user_dir=true
+config/custom_user_dir_name="cubekit"
+config/features=PackedStringArray("4.3", "GL Compatibility")
+run/low_processor_mode=true
+boot_splash/bg_color=Color(0.145098, 0.156863, 0.239216, 1)
+boot_splash/show_image=false
+config/icon="res://icon.svg"
+
+[autoload]
+
+ConfigSettings="*res://global_scripts/config_settings.gd"
+Globals="*res://global_scripts/globals.gd"
+
+[debug]
+
+gdscript/warnings/untyped_declaration=2
+gdscript/warnings/inferred_declaration=2
+
+[dotnet]
+
+project/assembly_name="mc_server_launcher"
+
+[gui]
+
+theme/custom="res://minimal_theme.tres"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"

@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+
+	<title>Cubekit| Web Client</title>
+	<meta charset="UTF-8" />
+	<meta name="description" content="Local Minecraft server manager.">
+	<meta name="author" content="Craig D'Cruz">
+	<meta name="viewport" content="width=device-width">
+
+	<meta name="theme-color" content="#18BDCB" />
+
+	<link href="/main.css" rel="stylesheet">
+
+	<link rel="icon" type="image/x-icon" href="/favicon.png">
+
+</head>
+
+<style>
+
+	button {
+		background-color: rgba(0, 0, 0, 0.6);
+		padding: 10px;
+		color: white;
+		border: none;
+		transition: linear background-color 0.2s;
+		font-weight: bold;
+		font-size: 16px;
+	}
+
+	button:hover {
+		background-color: rgba(0, 0, 0, 0.8);
+	}
+
+	button:disabled {
+		background-color: rgba(141, 141, 141, 0.8) !important;
+		cursor: not-allowed;
+	}
+
+	summary {
+		background: #1A6025;
+		padding: 10px;
+		user-select: none;
+		cursor: pointer;
+		margin-top: 10px;
+	}
+
+	section {
+		background: #1A6025;
+		padding: 10px;
+		user-select: none;
+		margin-top: 10px;
+	}
+
+	#manager_log {
+		margin: auto 20px;
+		padding: 10px;
+		background: rgb(30, 34, 25);
+		max-height: 500px;
+		overflow-y: auto;
+	}
+
+	label {
+		text-wrap-mode: nowrap;
+		font-weight: bold;
+		background-color: black;
+		align-content: center;
+		padding: 5px;
+	}
+
+	#reload_websocket {
+		background-color: red;
+	}
+
+	#console_input_box {
+		margin: auto 20px;
+		padding: 5px;
+		background: rgb(30, 34, 25);
+	}
+
+	#console_input_box>form {
+		display: flex;
+	}
+
+	#console_input_box input {
+		background-color: rgb(75, 75, 75);
+		color: white;
+		border: 0px;
+		padding: 0px 10px;
+	}
+
+	#console_input_box input::placeholder {
+		color: rgba(230, 230, 230, 0.726);
+		opacity: 1;
+	}
+
+	#command_input {
+		width: 100%;
+	}
+</style>
+
+
+<body>
+	<div class='wrapper'>
+
+
+
+		<div style="display: flex; align-items: center;">
+			<img src="/favicon.png" alt="Cubekit Icon"
+				style="width: 80px; height: 80px; border-radius: 10px; margin-right: 10px;" />
+			<div>
+				<h1>Cubekit</h1>
+				<h2>A local Minecraft server manager by CDcruz</h2>
+			</div>
+		</div>
+
+		<article id="contents">
+			<section style="display: flex; flex-wrap: wrap; align-content: center; gap: 5px; margin: auto 0px;">
+				<img id="server_indicator" src="/bad_status.png" alt="indicator."
+					style="aspect-ratio: 1/1; height: 100%; width: auto; margin: auto 0px;" />
+				<button id="start_button" disabled="true"
+					onclick="this.disabled = true; stopButton.disabled = true; sendWSRequest('command', 'startserver'); set_pending_indicator();">Start</button>
+				<button id="stop_button" disabled="true"
+					onclick="this.disabled = true; startButton.disabled = true; sendWSRequest('command', 'stopserver'); set_pending_indicator();">Stop</button>
+				<button id="reload_websocket" style="margin-left: auto;"
+					onclick="connect_websocket();">Reconnect</button>
+			</section>
+
+			<section>
+				<strong>Default server IP: <span id="default_ip">Nil</span> </strong><button onclick="copyText('default_ip');">Copy</button>
+			</section>
+
+			<section>
+				<strong>CPU Usage: <span id="cpu_usage"
+						style="display: inline-block; min-width: 50px;">0%</span></strong>|<strong>RAM Usage: <span
+						id="ram_usage">0%</span></strong>
+			</section>
+
+			<section>
+				<strong>Players online <span id="online_count">(0/20)</span></strong>
+				<div id="player_list">
+					<span style="color: grey;">-no players online-</span>
+				</div>
+			</section>
+
+
+			<details>
+				<summary><span>Console Log <button onclick="clear_logs();">Clear Logs</button></summary>
+				<div id="manager_log"></div>
+				<div id="console_input_box">
+					<form onsubmit="send_console_command(event);">
+						<label for="command_input">Input:</label>
+						<input id="command_input" type="text" placeholder="/say hello world!"
+							aria-label="Command input">
+						<button type="submit" style="padding: 5px;">Enter</button>
+					</form>
+				</div>
+			</details>
+		</article>
+
+	</div>
+</body>
+
+<script>
+	const startButton = document.querySelector("#start_button");
+	const stopButton = document.querySelector("#stop_button");
+</script>
+
+<script>
+	document.addEventListener("DOMContentLoaded", () => { set_url_path(); connect_websocket(); });
+	let URL;
+	let PORT;
+
+	function set_url_path() {
+		URL = location.hostname;
+		if (URL == "localhost") {
+			URL = "127.0.0.1"
+		}
+		PORT = location.port;
+		console.log(URL);
+		console.log(PORT);
+		console.log('http://' + URL + ":" + PORT + "/");
+	}
+
+	function sendRequest(path) {
+		let new_path = 'http://' + URL + ":" + PORT + "/" + path;
+		fetch(new_path, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ message: 'Button clicked' })
+		})
+			.then(response => response.text())
+			.then(data => {
+				console.log('Response from server:', data);
+			})
+			.catch(error => {
+				console.error('Error:', error);
+			});
+	}
+</script>
+
+<script>
+	var ws;
+	function connect_websocket() {
+		let ws_path = "ws://" + URL + ":" + (parseInt(PORT) + 1).toString();
+		console.log("Attempting to connect websocket on " + ws_path);
+		ws = new WebSocket(ws_path);
+
+		ws.onopen = function (event) {
+			console.log("Connected to WebSocket server");
+			document.getElementById("reload_websocket").disabled = true;
+		};
+
+		ws.onmessage = function (event) {
+			console.log(event.data)
+
+			if (event.data == "pong") {
+				return
+			}
+
+			if (!isJsonObject(event.data)) {
+				add_log("[manager] " + event.data);
+				return;
+			}
+
+			var res_dict = JSON.parse(event.data)
+			//add_log("[manager] "+res_dict["msg"]);
+
+			switch (res_dict["msg"]) {
+				case "init":
+					var data = res_dict["data"]
+					if (data["server_on"]) {
+						startButton.disabled = true;
+						stopButton.disabled = false;
+						set_indicator(0);
+					} else {
+						startButton.disabled = false;
+						stopButton.disabled = false;
+						set_indicator(3);
+					}
+
+					if (data["default_ip"]) {
+						document.querySelector("#default_ip").innerHTML = data["default_ip"] + ":" + data["port"];
+					}
+					break;
+				case "attempting_start":
+					startButton.disabled = true;
+					stopButton.disabled = true;
+					break;
+				case "server_started":
+					stopButton.disabled = false;
+					set_indicator(0);
+					break;
+				case "server_stopped":
+					startButton.disabled = false;
+					stopButton.disabled = false;
+					document.querySelector("#player_list").innerHTML = '<span style="color: grey;">-no players online-</span>';
+					document.querySelector("#cpu_usage").innerHTML = "0%";
+					document.querySelector("#ram_usage").innerHTML = "0%";
+					set_indicator(3);
+					break;
+				case "cannot_start":
+					stopButton.disabled = false;
+					add_log("[manager] Server already started. It needs to be stopped before starting again.");
+					set_indicator(0);
+					break;
+				case "console":
+					add_log("[Console] " + res_dict["output"]);
+				case "cpu_usage":
+					document.querySelector("#cpu_usage").innerHTML = (res_dict["amount"] ?? 0) + "%";
+					break;
+				case "ram_usage":
+					document.querySelector("#ram_usage").innerHTML = (res_dict["amount"] ?? 0) + "%";
+					break;
+				case "online_count":
+					document.querySelector("#online_count").innerHTML = `(${res_dict["active"]}/${res_dict["max"]})`;
+					break;
+				case "online_players":
+					console.log(res_dict["players"]);
+					let players_arr = res_dict["players"];
+					let text_output = players_arr.map(player => player["name"]).join(", ");
+					if (players_arr.length == 0) {
+						document.querySelector("#player_list").innerHTML = '<span style="color: grey;">-no players online-</span>';
+					} else {
+						document.querySelector("#player_list").innerHTML = text_output;
+					}
+
+					break;
+				default:
+					break;
+			}
+		};
+
+		ws.onclose = function (event) {
+			console.log("Disconnected from WebSocket server");
+			add_log("[manager] Disconnected from web server. Click 'Reconnect' to reconnect.");
+			document.getElementById("reload_websocket").disabled = false;
+		};
+
+		ws.onerror = function (event) {
+			console.error("WebSocket error: " + event);
+			document.getElementById("reload_websocket").disabled = false;
+		};
+	}
+
+
+
+	const ping_loop = setInterval(() => {
+		if (ws.readyState === WebSocket.OPEN) {
+			//console.log("This runs every 5 seconds!");
+			sendWSRequest('ping')
+		}
+	}, 5000);
+
+	function sendWSRequest(dtype = "ping", dmsg = "") {
+		const dict = {
+			type: dtype,
+			msg: dmsg
+		}
+		ws.send(JSON.stringify(dict))
+	}
+
+
+	function send_console_command(event) {
+		event.preventDefault();
+		const command = document.querySelector("#command_input");
+		sendWSRequest("console_com", command.value);
+		command.value = "";
+	}
+
+</script>
+
+<script>
+	function add_log(str) {
+		var messagesDiv = document.getElementById("manager_log");
+		var message = document.createElement("div");
+		message.textContent = str;
+		messagesDiv.appendChild(message);
+	}
+
+	function clear_logs() {
+		document.getElementById("manager_log").innerHTML = "";
+	}
+
+
+	var indicator_loop;
+	function set_indicator(status) {
+		switch (status) {
+			case 0:
+				document.querySelector("#server_indicator").src = "/good_status.png";
+				if (indicator_loop != null) {
+					clearInterval(indicator_loop);
+				}
+				break;
+			case 1:
+				document.querySelector("#server_indicator").src = "/wait_status.png";
+				break;
+			case 2:
+				document.querySelector("#server_indicator").src = "/nil_status.png";
+				break;
+			case 3:
+				document.querySelector("#server_indicator").src = "/bad_status.png";
+				if (indicator_loop != null) {
+					clearInterval(indicator_loop);
+				}
+				break;
+			default:
+				document.querySelector("#server_indicator").src = "/bad_status.png";
+				if (indicator_loop != null) {
+					clearInterval(indicator_loop);
+				}
+				break;
+		}
+
+	}
+
+	function set_pending_indicator() {
+		set_indicator(1);
+		indicator_loop = setInterval(() => {
+			if (document.querySelector("#server_indicator").src.split("/").pop() == "wait_status.png") {
+				set_indicator(2);
+			} else {
+				set_indicator(1);
+			}
+		}, 500);
+	}
+
+
+	function isJsonObject(str) {
+		try {
+			const obj = JSON.parse(str);
+			return obj !== null && typeof obj === "object" && !Array.isArray(obj);
+		} catch (e) {
+			return false;
+		}
+	}
+
+	function copyText(spanId) {
+		const text = document.getElementById(spanId).textContent;
+		const textArea = document.createElement("textarea");
+		textArea.value = text;
+		document.body.appendChild(textArea);
+		textArea.select();
+		document.execCommand("copy");
+		document.body.removeChild(textArea);
+	}
+</script>
+
+</html>
