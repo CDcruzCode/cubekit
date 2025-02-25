@@ -1,0 +1,2661 @@
+[gd_scene load_steps=34 format=3 uid="uid://qmbrn4sdti1m"]
+
+[ext_resource type="Script" path="res://scenes/main_dashboard/dashboard/main_dashboard.gd" id="2_575yr"]
+[ext_resource type="Script" path="res://scenes/main_dashboard/start_server.gd" id="3_fhh6w"]
+[ext_resource type="Texture2D" uid="uid://dqicud6px0kt6" path="res://images/wait_status.png" id="3_n6vri"]
+[ext_resource type="Script" path="res://scenes/main_dashboard/server_settings.gd" id="4_8hp7p"]
+[ext_resource type="Script" path="res://scenes/main_dashboard/open_web_interface.gd" id="4_gpcbo"]
+[ext_resource type="Script" path="res://scenes/main_dashboard/uptime_schedule.gd" id="4_kvhnn"]
+[ext_resource type="LabelSettings" uid="uid://b8u8o0774kw1b" path="res://scenes/main_dashboard/title_label.tres" id="5_rpu06"]
+[ext_resource type="Texture2D" uid="uid://bgbd7kh0as8te" path="res://images/mc_question_mark.svg" id="5_yhrgb"]
+[ext_resource type="Script" path="res://scenes/main_dashboard/dashboard/players_online.gd" id="6_0ju7y"]
+[ext_resource type="LabelSettings" uid="uid://b2u3830xnev1g" path="res://scenes/main_dashboard/form_label.tres" id="6_8v02b"]
+[ext_resource type="StyleBox" uid="uid://cost0oxnubkf8" path="res://scenes/main_dashboard/dashboard_panel.tres" id="6_is6ev"]
+[ext_resource type="Script" path="res://scenes/main_dashboard/dashboard/ip_address.gd" id="7_sbawa"]
+[ext_resource type="Script" path="res://scenes/main_dashboard/whitelist.gd" id="9_alug2"]
+[ext_resource type="Script" path="res://scenes/main_dashboard/player_cache.gd" id="10_eqyt2"]
+[ext_resource type="PackedScene" uid="uid://busbkd361vxdm" path="res://scenes/general/copy_button.tscn" id="10_n2xpv"]
+[ext_resource type="Script" path="res://scenes/main_dashboard/manager_settings.gd" id="13_6sfif"]
+[ext_resource type="Script" path="res://scenes/main_dashboard/world_management/world_management.gd" id="13_bd8x2"]
+[ext_resource type="Script" path="res://scenes/main_dashboard/dashboard/server_monitors.gd" id="13_w24ha"]
+[ext_resource type="Script" path="res://scenes/main_dashboard/world_management/backup_dir.gd" id="14_avs1i"]
+[ext_resource type="Script" path="res://scenes/main_dashboard/world_management/create_new_world.gd" id="14_boaj7"]
+[ext_resource type="Script" path="res://scenes/main_dashboard/monitor_draw.gd" id="14_f50s3"]
+[ext_resource type="Script" path="res://scenes/main_dashboard/world_management/import_world.gd" id="15_ubw7j"]
+[ext_resource type="Script" path="res://scenes/main_dashboard/world_management/view_backups.gd" id="15_w0cy8"]
+[ext_resource type="Script" path="res://scenes/main_dashboard/world_management/world_backup.gd" id="16_gla40"]
+[ext_resource type="Script" path="res://scenes/main_dashboard/web_server.gd" id="18_rqdo7"]
+[ext_resource type="Script" path="res://scenes/main_dashboard/web_socket.gd" id="19_q3u8d"]
+[ext_resource type="Script" path="res://scenes/main_dashboard/server_version/refresh_version_list.gd" id="21_57ohw"]
+[ext_resource type="Script" path="res://scenes/main_dashboard/server_version/download_minecraft_ver_button.gd" id="22_ex0dp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xqydl"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3f547"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.188235, 0.188235, 0.188235, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.187176, 0.187176, 0.187176, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_74eed"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.145098, 0.156863, 0.239216, 1)
+
+[sub_resource type="ImageTexture" id="ImageTexture_d1bbx"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_bwhi7"]
+font_size = 11
+font_color = Color(0.597176, 0.597176, 0.597176, 1)
+
+[node name="main_dashboard" type="ColorRect"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.145098, 0.156863, 0.239216, 1)
+script = ExtResource("2_575yr")
+
+[node name="mcon" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="vbox" type="VBoxContainer" parent="mcon"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="hbox" type="HBoxContainer" parent="mcon/vbox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="server_online_status" type="TextureRect" parent="mcon/vbox/hbox"]
+texture_filter = 1
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("3_n6vri")
+expand_mode = 1
+
+[node name="start_server" type="Button" parent="mcon/vbox/hbox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Start"
+script = ExtResource("3_fhh6w")
+
+[node name="uptime_schedule" type="Node" parent="mcon/vbox/hbox/start_server"]
+unique_name_in_owner = true
+process_mode = 3
+script = ExtResource("4_kvhnn")
+
+[node name="uptime_timer" type="Timer" parent="mcon/vbox/hbox/start_server/uptime_schedule"]
+unique_name_in_owner = true
+process_mode = 3
+wait_time = 60.0
+
+[node name="stop_server" type="Button" parent="mcon/vbox/hbox"]
+layout_mode = 2
+text = "Stop"
+
+[node name="refresh_web_server" type="Button" parent="mcon/vbox/hbox"]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "Reload"
+
+[node name="open_web_interface" type="Button" parent="mcon/vbox/hbox"]
+layout_mode = 2
+size_flags_horizontal = 8
+tooltip_text = "Opens a web interface for the MC manager.
+You can access this website via any device
+on your local network."
+text = "Open web interface"
+script = ExtResource("4_gpcbo")
+
+[node name="web_server_port" type="SpinBox" parent="mcon/vbox/hbox"]
+layout_mode = 2
+size_flags_horizontal = 8
+tooltip_text = "Port number for the web interface.
+Change and click the reload button
+if there is an error launching the web
+interface."
+max_value = 25565.0
+rounded = true
+
+[node name="tcon" type="TabContainer" parent="mcon/vbox"]
+layout_mode = 2
+size_flags_vertical = 3
+current_tab = 1
+
+[node name="Dashboard" type="PanelContainer" parent="mcon/vbox/tcon"]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_xqydl")
+metadata/_tab_index = 0
+
+[node name="vbox" type="VBoxContainer" parent="mcon/vbox/tcon/Dashboard"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Dashboard/vbox"]
+layout_mode = 2
+text = "DASHBOARD"
+label_settings = ExtResource("5_rpu06")
+
+[node name="h" type="HSeparator" parent="mcon/vbox/tcon/Dashboard/vbox"]
+layout_mode = 2
+
+[node name="hbox" type="HBoxContainer" parent="mcon/vbox/tcon/Dashboard/vbox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="vbox" type="VBoxContainer" parent="mcon/vbox/tcon/Dashboard/vbox/hbox"]
+layout_mode = 2
+
+[node name="ip_address" type="PanelContainer" parent="mcon/vbox/tcon/Dashboard/vbox/hbox/vbox"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_styles/panel = ExtResource("6_is6ev")
+script = ExtResource("7_sbawa")
+
+[node name="hbox" type="HBoxContainer" parent="mcon/vbox/tcon/Dashboard/vbox/hbox/vbox/ip_address"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Dashboard/vbox/hbox/vbox/ip_address/hbox"]
+layout_mode = 2
+text = "Default IP:"
+label_settings = ExtResource("6_8v02b")
+
+[node name="ip_label" type="Label" parent="mcon/vbox/tcon/Dashboard/vbox/hbox/vbox/ip_address/hbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+label_settings = ExtResource("6_8v02b")
+vertical_alignment = 1
+
+[node name="copy_button" parent="mcon/vbox/tcon/Dashboard/vbox/hbox/vbox/ip_address/hbox" node_paths=PackedStringArray("copy_node") instance=ExtResource("10_n2xpv")]
+layout_mode = 2
+copy_node = NodePath("../ip_label")
+
+[node name="info" type="TextureRect" parent="mcon/vbox/tcon/Dashboard/vbox/hbox/vbox/ip_address/hbox"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+tooltip_text = "This is your default MC server IP.
+Use this to connect to your server.
+The IP may be different if you have changed IP settings."
+mouse_default_cursor_shape = 16
+texture = ExtResource("5_yhrgb")
+expand_mode = 2
+
+[node name="players_online" type="PanelContainer" parent="mcon/vbox/tcon/Dashboard/vbox/hbox/vbox"]
+custom_minimum_size = Vector2(250, 300)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("6_is6ev")
+script = ExtResource("6_0ju7y")
+
+[node name="Timer" type="Timer" parent="mcon/vbox/tcon/Dashboard/vbox/hbox/vbox/players_online"]
+
+[node name="vbox" type="VBoxContainer" parent="mcon/vbox/tcon/Dashboard/vbox/hbox/vbox/players_online"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Dashboard/vbox/hbox/vbox/players_online/vbox"]
+layout_mode = 2
+text = "Players online"
+label_settings = ExtResource("5_rpu06")
+
+[node name="scon" type="ScrollContainer" parent="mcon/vbox/tcon/Dashboard/vbox/hbox/vbox/players_online/vbox"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="online_list" type="VBoxContainer" parent="mcon/vbox/tcon/Dashboard/vbox/hbox/vbox/players_online/vbox/scon"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="server_monitors" type="VBoxContainer" parent="mcon/vbox/tcon/Dashboard/vbox/hbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("13_w24ha")
+
+[node name="cpu_monitor" type="PanelContainer" parent="mcon/vbox/tcon/Dashboard/vbox/hbox/server_monitors"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_styles/panel = ExtResource("6_is6ev")
+
+[node name="cpu_box" type="ColorRect" parent="mcon/vbox/tcon/Dashboard/vbox/hbox/server_monitors/cpu_monitor"]
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(0.2394, 0.42, 0.26649, 1)
+script = ExtResource("14_f50s3")
+TITLE = "CPU"
+BG_COLOUR = Color(0.239216, 0.419608, 0.266667, 1)
+
+[node name="ram_monitor" type="PanelContainer" parent="mcon/vbox/tcon/Dashboard/vbox/hbox/server_monitors"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_styles/panel = ExtResource("6_is6ev")
+
+[node name="ram_box" type="ColorRect" parent="mcon/vbox/tcon/Dashboard/vbox/hbox/server_monitors/ram_monitor"]
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(0.2394, 0.42, 0.26649, 1)
+script = ExtResource("14_f50s3")
+TITLE = "RAM"
+BG_COLOUR = Color(0.239216, 0.419608, 0.266667, 1)
+
+[node name="monitor_timer" type="Timer" parent="mcon/vbox/tcon/Dashboard/vbox/hbox/server_monitors"]
+
+[node name="Console" type="PanelContainer" parent="mcon/vbox/tcon"]
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="mcon" type="MarginContainer" parent="mcon/vbox/tcon/Console"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="vbox" type="VBoxContainer" parent="mcon/vbox/tcon/Console/mcon"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="console_output_display" type="TextEdit" parent="mcon/vbox/tcon/Console/mcon/vbox"]
+layout_mode = 2
+size_flags_vertical = 3
+focus_mode = 0
+placeholder_text = "No data..."
+context_menu_enabled = false
+shortcut_keys_enabled = false
+drag_and_drop_selection_enabled = false
+virtual_keyboard_enabled = false
+middle_mouse_paste_enabled = false
+wrap_mode = 1
+autowrap_mode = 2
+indent_wrapped_lines = true
+caret_move_on_right_click = false
+caret_multiple = false
+draw_tabs = true
+draw_spaces = true
+
+[node name="console_input" type="LineEdit" parent="mcon/vbox/tcon/Console/mcon/vbox"]
+layout_mode = 2
+placeholder_text = "/help"
+caret_blink = true
+
+[node name="Server Properties" type="PanelContainer" parent="mcon/vbox/tcon"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+script = ExtResource("4_8hp7p")
+metadata/_tab_index = 2
+
+[node name="vbox" type="VBoxContainer" parent="mcon/vbox/tcon/Server Properties"]
+layout_mode = 2
+
+[node name="scon" type="ScrollContainer" parent="mcon/vbox/tcon/Server Properties/vbox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="vbox" type="VBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 15
+
+[node name="general_settings" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox"]
+layout_mode = 2
+text = "General settings"
+label_settings = ExtResource("5_rpu06")
+
+[node name="general_con" type="HFlowContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox"]
+layout_mode = 2
+theme_override_constants/h_separation = 15
+theme_override_constants/v_separation = 15
+
+[node name="white_list" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con/white_list"]
+layout_mode = 2
+text = "White list"
+label_settings = ExtResource("6_8v02b")
+
+[node name="white-list" type="CheckButton" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con/white_list"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con/white_list"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "When ON, the white list is used to only
+allow players on the list access to the
+server.
+Refer to the White list tab to manage players."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="pvp1" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con/pvp1"]
+layout_mode = 2
+text = "PVP"
+label_settings = ExtResource("6_8v02b")
+
+[node name="pvp" type="CheckButton" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con/pvp1"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con/pvp1"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "When enabled, allows players to damage each other."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="allow_flight" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con/allow_flight"]
+layout_mode = 2
+text = "Allow flight"
+label_settings = ExtResource("6_8v02b")
+
+[node name="allow-flight" type="CheckButton" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con/allow_flight"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con/allow_flight"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "When ON, allows survival players to stay in the air.
+When OFF, survival players will be kicked if they
+are in air for more than 5 seconds."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="max_players" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con/max_players"]
+layout_mode = 2
+text = "Max players"
+label_settings = ExtResource("6_8v02b")
+
+[node name="max-players" type="SpinBox" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con/max_players"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+min_value = 1.0
+value = 20.0
+allow_greater = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con/max_players"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Sets the max players allowed online at one time.
+More players can cause more lag."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="idle_timeout" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con/idle_timeout"]
+layout_mode = 2
+text = "Player idle timeout"
+label_settings = ExtResource("6_8v02b")
+
+[node name="player-idle-timeout" type="SpinBox" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con/idle_timeout"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+min_value = -1.0
+max_value = 1500.0
+value = 256.0
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con/idle_timeout"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "If value is greater than 0, players are kicked from the server
+if they are idle for more than the set time in minutes."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="force_gamemode" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con/force_gamemode"]
+layout_mode = 2
+text = "Force gamemode"
+label_settings = ExtResource("6_8v02b")
+
+[node name="force-gamemode" type="CheckButton" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con/force_gamemode"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con/force_gamemode"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "When ON, forces players to the default
+gamemode each time they rejoin the server."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="gamemode1" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con/gamemode1"]
+layout_mode = 2
+text = "Default gamemode"
+label_settings = ExtResource("6_8v02b")
+
+[node name="gamemode" type="OptionButton" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con/gamemode1"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+selected = 3
+item_count = 4
+popup/item_0/text = "survival"
+popup/item_0/id = 3
+popup/item_1/text = "creative"
+popup/item_1/id = 1
+popup/item_2/text = "adventure"
+popup/item_2/id = 2
+popup/item_3/text = "spectator"
+popup/item_3/id = 3
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con/gamemode1"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Sets the default gamemode for the server."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="difficulty1" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con/difficulty1"]
+layout_mode = 2
+text = "Difficulty"
+label_settings = ExtResource("6_8v02b")
+
+[node name="difficulty" type="OptionButton" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con/difficulty1"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+selected = 2
+item_count = 4
+popup/item_0/text = "peaceful"
+popup/item_1/text = "easy"
+popup/item_1/id = 1
+popup/item_2/text = "normal"
+popup/item_2/id = 2
+popup/item_3/text = "hard"
+popup/item_3/id = 3
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con/difficulty1"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Change the difficulty of the server world."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="hardcore1" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con/hardcore1"]
+layout_mode = 2
+text = "Hardcore"
+label_settings = ExtResource("6_8v02b")
+
+[node name="hardcore" type="CheckButton" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con/hardcore1"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con/hardcore1"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Enables hardcore mode. Server difficulty is ignored.
+On player deaths, they are set to spectator mode."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="motd1" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con/motd1"]
+layout_mode = 2
+text = "Message of the day (MOTD)"
+label_settings = ExtResource("6_8v02b")
+
+[node name="motd" type="LineEdit" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con/motd1"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "A minecraft server."
+placeholder_text = "Your server message!"
+max_length = 59
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con/motd1"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Sets the server status message.
+Supports color/ formatting codes &
+some unicode special characters."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="op_permission_level" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con/op_permission_level"]
+layout_mode = 2
+text = "OP permission level"
+label_settings = ExtResource("6_8v02b")
+
+[node name="op-permission-level" type="SpinBox" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con/op_permission_level"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+min_value = 1.0
+max_value = 4.0
+value = 4.0
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/general_con/op_permission_level"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Sets the default permission level for OP'd players."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="h" type="HSeparator" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox"]
+layout_mode = 2
+
+[node name="world_settings" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox"]
+layout_mode = 2
+text = "World settings"
+label_settings = ExtResource("5_rpu06")
+
+[node name="world_con" type="HFlowContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox"]
+layout_mode = 2
+theme_override_constants/h_separation = 15
+theme_override_constants/v_separation = 15
+
+[node name="level_name" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/level_name"]
+layout_mode = 2
+text = "Level name"
+label_settings = ExtResource("6_8v02b")
+
+[node name="level-name" type="LineEdit" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/level_name"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "world"
+placeholder_text = "world"
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/level_name"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Set the world name. Will generate a
+world folder with this name or load
+a folder with this name."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="level_seed" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/level_seed"]
+layout_mode = 2
+text = "Level seed"
+label_settings = ExtResource("6_8v02b")
+
+[node name="level-seed" type="LineEdit" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/level_seed"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+placeholder_text = "8436084"
+max_length = 19
+flat = true
+
+[node name="Button" type="Button" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/level_seed"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Randomize"
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/level_seed"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Sets the world seed value."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="allow_nether" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/allow_nether"]
+layout_mode = 2
+text = "Allow nether"
+label_settings = ExtResource("6_8v02b")
+
+[node name="allow-nether" type="CheckButton" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/allow_nether"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/allow_nether"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "When ON, portals work as normal.
+When OFF, portals do not work."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="spawn_monsters" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/spawn_monsters"]
+layout_mode = 2
+text = "Spawn monsters"
+label_settings = ExtResource("6_8v02b")
+
+[node name="spawn-monsters" type="CheckButton" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/spawn_monsters"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/spawn_monsters"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "When ON, monsters will spawn.
+If peaceful difficulty is chosen, this has no effect."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="level_type" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/level_type"]
+layout_mode = 2
+text = "Level Type"
+label_settings = ExtResource("6_8v02b")
+
+[node name="level-type" type="OptionButton" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/level_type"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+selected = 0
+item_count = 5
+popup/item_0/text = "normal"
+popup/item_1/text = "flat"
+popup/item_1/id = 1
+popup/item_2/text = "large_biomes"
+popup/item_2/id = 2
+popup/item_3/text = "amplified"
+popup/item_3/id = 3
+popup/item_4/text = "single_biome_surface"
+popup/item_4/id = 4
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/level_type"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Determines the generator type for the world."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="generate_structures" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/generate_structures"]
+layout_mode = 2
+text = "Generate structures"
+label_settings = ExtResource("6_8v02b")
+
+[node name="generate-structures" type="CheckButton" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/generate_structures"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/generate_structures"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "When ON, structures (like villages) are generated in new chunks.
+When OFF, structures no longer generate. Dungeons still generate."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="generator_settings" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/generator_settings"]
+layout_mode = 2
+text = "Generator settings"
+label_settings = ExtResource("6_8v02b")
+
+[node name="generator-settings" type="LineEdit" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/generator_settings"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+placeholder_text = "{}"
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/generator_settings"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Write your own customized world generation settings.
+Must be formatted in JSON format.
+Only works with certain Level Types."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="max_world_size" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/max_world_size"]
+layout_mode = 2
+text = "Max world size"
+label_settings = ExtResource("6_8v02b")
+
+[node name="max-world-size" type="SpinBox" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/max_world_size"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+min_value = 1.0
+max_value = 3e+07
+value = 3e+07
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/max_world_size"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Sets the maximum border radius for the world."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="spawn_protection" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/spawn_protection"]
+layout_mode = 2
+text = "Spawn protection"
+label_settings = ExtResource("6_8v02b")
+
+[node name="spawn-protection" type="SpinBox" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/spawn_protection"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+value = 16.0
+allow_greater = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/spawn_protection"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Sets the area of spawn that is protected
+from player destruction. OP'd players can
+destroy blocks within the area."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="simulation_distance" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/simulation_distance"]
+layout_mode = 2
+text = "Simulation distance"
+label_settings = ExtResource("6_8v02b")
+
+[node name="simulation-distance" type="SpinBox" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/simulation_distance"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+min_value = 3.0
+max_value = 32.0
+value = 10.0
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/simulation_distance"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Sets the maximum distance from a player
+where entities will still be simulated.
+Higher values can cause more lag!"
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="view_distance" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/view_distance"]
+layout_mode = 2
+text = "View distance"
+label_settings = ExtResource("6_8v02b")
+
+[node name="view-distance" type="SpinBox" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/view_distance"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+min_value = 3.0
+max_value = 32.0
+value = 10.0
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/view_distance"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Sets the distance in a chunk radius that the server
+renders per player.
+Higher values can cause more lag!"
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="permission_level" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/permission_level"]
+layout_mode = 2
+text = "Function permission level"
+label_settings = ExtResource("6_8v02b")
+
+[node name="function-permission-level" type="SpinBox" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/permission_level"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+min_value = 1.0
+max_value = 4.0
+value = 2.0
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/permission_level"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Sets the permission level for functions (data pack files)."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="enable_command_block" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/enable_command_block"]
+layout_mode = 2
+text = "Enable command blocks"
+label_settings = ExtResource("6_8v02b")
+
+[node name="enable-command-blocks" type="CheckButton" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/enable_command_block"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/world_con/enable_command_block"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "When ON, allows command blocks to run commands."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="h2" type="HSeparator" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox"]
+layout_mode = 2
+
+[node name="network_settings" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox"]
+layout_mode = 2
+text = "Network settings"
+label_settings = ExtResource("5_rpu06")
+
+[node name="network_con" type="HFlowContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox"]
+layout_mode = 2
+theme_override_constants/h_separation = 15
+theme_override_constants/v_separation = 15
+
+[node name="server_ip" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/server_ip"]
+layout_mode = 2
+text = "Server IP"
+label_settings = ExtResource("6_8v02b")
+
+[node name="server-ip" type="LineEdit" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/server_ip"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+placeholder_text = "xxx.xxx.xxx.xxx"
+max_length = 15
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/server_ip"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Sets the server IP.
+!It's recommended to keep this blank.!"
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="server_port" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/server_port"]
+layout_mode = 2
+text = "Server port"
+label_settings = ExtResource("6_8v02b")
+
+[node name="server-port" type="SpinBox" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/server_port"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+min_value = -1.0
+max_value = 25565.0
+value = 25565.0
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/server_port"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Sets the server port.
+!It's recommended to keep the default 25565!"
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="enable_query" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/enable_query"]
+layout_mode = 2
+text = "Enable query"
+label_settings = ExtResource("6_8v02b")
+
+[node name="enable-query" type="CheckButton" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/enable_query"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/enable_query"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Enables GameSpy4 protocol server listener."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="query_port" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/query_port"]
+layout_mode = 2
+text = "Query port"
+label_settings = ExtResource("6_8v02b")
+
+[node name="query+port" type="SpinBox" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/query_port"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+min_value = 1.0
+max_value = 25565.0
+value = 25565.0
+allow_greater = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/query_port"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Sets the port for the query server.
+It's recommended to keep it at the default 25565."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="enforce_secure_profile" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/enforce_secure_profile"]
+layout_mode = 2
+text = "Enforce Secure Profile"
+label_settings = ExtResource("6_8v02b")
+
+[node name="enforce-secure-profile" type="CheckButton" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/enforce_secure_profile"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/enforce_secure_profile"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "When ON, only authentic Minecraft
+accounts can join the server."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="online_mode" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/online_mode"]
+layout_mode = 2
+text = "Online mode"
+label_settings = ExtResource("6_8v02b")
+
+[node name="online-mode" type="CheckButton" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/online_mode"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/online_mode"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "When ON, the server verifies players using Mojang's database.
+When OFF, the server does not check players.
+!If OFF, would allow hackers or unlicensed copies of Minecraft to join!"
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="hide_online_players" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/hide_online_players"]
+layout_mode = 2
+text = "Hide online players"
+label_settings = ExtResource("6_8v02b")
+
+[node name="hide-online-players" type="CheckButton" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/hide_online_players"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/hide_online_players"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "When enabled, does not show player count on the server status."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="enable_status" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/enable_status"]
+layout_mode = 2
+text = "Enable status"
+label_settings = ExtResource("6_8v02b")
+
+[node name="enable-status" type="CheckButton" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/enable_status"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/enable_status"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "When ON, the server will appear online.
+When OFF, the server status will appear
+offline even when the server is online."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="sync_chunk" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/sync_chunk"]
+layout_mode = 2
+text = "Enable status"
+label_settings = ExtResource("6_8v02b")
+
+[node name="sync-chunk-writes" type="CheckButton" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/sync_chunk"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/sync_chunk"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "When ON, the server will appear online.
+When OFF, the server status will appear
+offline even when the server is online."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="enforce_whitelist" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/enforce_whitelist"]
+layout_mode = 2
+text = "Enforce whitelist"
+label_settings = ExtResource("6_8v02b")
+
+[node name="enforce-whitelist" type="CheckButton" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/enforce_whitelist"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/enforce_whitelist"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "When ON & if the whitelist is enabled,
+any players added to the whitelist while
+online will get kicked from the server."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="pause_when_empty" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/pause_when_empty"]
+layout_mode = 2
+text = "Pause when empty"
+label_settings = ExtResource("6_8v02b")
+
+[node name="pause-when-empty-seconds" type="SpinBox" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/pause_when_empty"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+min_value = -1.0
+value = 60.0
+allow_greater = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/pause_when_empty"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Pauses the server's execution when no one is on
+the server for a certain amount of time in seconds."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="rate_limit" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/rate_limit"]
+layout_mode = 2
+text = "Rate limit"
+label_settings = ExtResource("6_8v02b")
+
+[node name="rate-limit" type="SpinBox" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/rate_limit"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+allow_greater = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/rate_limit"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Sets the maximum amount of packets
+a user can send before getting kicked.
+Setting this to 0 disables this feature."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="compression_threshold" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/compression_threshold"]
+layout_mode = 2
+text = "Network compression threshold"
+label_settings = ExtResource("6_8v02b")
+
+[node name="network-compression-threshold" type="SpinBox" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/compression_threshold"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+min_value = -1.0
+max_value = 1500.0
+value = 256.0
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/network_con/compression_threshold"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Set network compression. Lower values equal more compression.
+!Only change if you know what you're doing!"
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="h3" type="HSeparator" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox"]
+layout_mode = 2
+
+[node name="technical_settings" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox"]
+layout_mode = 2
+text = "Technical settings"
+label_settings = ExtResource("5_rpu06")
+
+[node name="technical_con" type="HFlowContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox"]
+layout_mode = 2
+
+[node name="rcon_settings" type="HFlowContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 15
+theme_override_constants/v_separation = 15
+
+[node name="broadcast_rcon" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/rcon_settings"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/rcon_settings/broadcast_rcon"]
+layout_mode = 2
+text = "Broadcast RCON to OPs"
+label_settings = ExtResource("6_8v02b")
+
+[node name="broadcast-rcon-to-ops" type="CheckButton" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/rcon_settings/broadcast_rcon"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/rcon_settings/broadcast_rcon"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "When ON, allows OP'd players
+to see rcon console command outputs."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="enable_rcon" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/rcon_settings"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/rcon_settings/enable_rcon"]
+layout_mode = 2
+text = "Enable RCON"
+label_settings = ExtResource("6_8v02b")
+
+[node name="enable-rcon" type="CheckButton" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/rcon_settings/enable_rcon"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/rcon_settings/enable_rcon"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Enables remote access to the server console.
+!Only enable if you know what you're doing!"
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="rcon_password" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/rcon_settings"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/rcon_settings/rcon_password"]
+layout_mode = 2
+text = "RCON password"
+label_settings = ExtResource("6_8v02b")
+
+[node name="rcon+password" type="LineEdit" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/rcon_settings/rcon_password"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "world"
+placeholder_text = "world"
+max_length = 59
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/rcon_settings/rcon_password"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Sets the password for the rcon feature."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="rcon_port" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/rcon_settings"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/rcon_settings/rcon_port"]
+layout_mode = 2
+text = "RCON port"
+label_settings = ExtResource("6_8v02b")
+
+[node name="rcon+port" type="SpinBox" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/rcon_settings/rcon_port"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+min_value = 1.0
+max_value = 25565.0
+value = 25565.0
+allow_greater = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/rcon_settings/rcon_port"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Sets the port for the RCON feature."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="resource_pack" type="HFlowContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con"]
+layout_mode = 2
+
+[node name="resource_pack" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/resource_pack"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/resource_pack/resource_pack"]
+layout_mode = 2
+text = "Resource pack"
+label_settings = ExtResource("6_8v02b")
+
+[node name="resource-pack" type="LineEdit" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/resource_pack/resource_pack"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+placeholder_text = "http\\://somedomain.com/somepack.zip"
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/resource_pack/resource_pack"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Set a URL to a resource pack for users to download."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="resource_pack_prompt" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/resource_pack"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/resource_pack/resource_pack_prompt"]
+layout_mode = 2
+text = "Resource pack prompt"
+label_settings = ExtResource("6_8v02b")
+
+[node name="resource-pack-prompt" type="LineEdit" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/resource_pack/resource_pack_prompt"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+placeholder_text = "Download this awesome pack!"
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/resource_pack/resource_pack_prompt"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Sets a custom message when prompting users
+download your set resource pack."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="require_resource" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/resource_pack"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/resource_pack/require_resource"]
+layout_mode = 2
+text = "Prevent proxy connections"
+label_settings = ExtResource("6_8v02b")
+
+[node name="require-resource-pack" type="CheckButton" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/resource_pack/require_resource"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/resource_pack/require_resource"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Enforces the resource pack must be downloaded.
+If a player declines, they are kicked from the server."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="broadcast_console" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/broadcast_console"]
+layout_mode = 2
+text = "Broadcast console to OPs"
+label_settings = ExtResource("6_8v02b")
+
+[node name="broadcast-console-to-ops" type="CheckButton" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/broadcast_console"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/broadcast_console"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "When ON, allows OP'd players
+to see console command outputs."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="enable_jmx" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/enable_jmx"]
+layout_mode = 2
+text = "Enable JMX Monitoring"
+label_settings = ExtResource("6_8v02b")
+
+[node name="enable-jmx" type="CheckButton" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/enable_jmx"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/enable_jmx"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "When ON, allows command blocks to run commands."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="entity_broadcast_range" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/entity_broadcast_range"]
+layout_mode = 2
+text = "Entity broadcast range"
+label_settings = ExtResource("6_8v02b")
+
+[node name="entity-broadcast-range-percentage" type="SpinBox" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/entity_broadcast_range"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+min_value = 10.0
+max_value = 1000.0
+value = 100.0
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/entity_broadcast_range"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Controls the max distance entities are rendered at.
+Higher numbers mean entities are visible further away.
+This however, will cause more lag."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="max_tick_time" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/max_tick_time"]
+layout_mode = 2
+text = "Max tick time"
+label_settings = ExtResource("6_8v02b")
+
+[node name="max-tick-time" type="SpinBox" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/max_tick_time"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+min_value = -1.0
+value = 100.0
+allow_greater = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/max_tick_time"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Sets the maximum number of milliseconds a single
+tick may take before the server will forcibly shutdown.
+Set to -1 disables this feature."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="disabled_packs" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/disabled_packs"]
+layout_mode = 2
+text = "Initial disabled packs"
+label_settings = ExtResource("6_8v02b")
+
+[node name="disabled-packs" type="LineEdit" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/disabled_packs"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+placeholder_text = "datapack1, datapack2"
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/disabled_packs"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Create a comma-separated list of
+datapacks that are not enabled
+during world creation."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="enabled_packs" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/enabled_packs"]
+layout_mode = 2
+text = "Initial disabled packs"
+label_settings = ExtResource("6_8v02b")
+
+[node name="enabled-packs" type="LineEdit" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/enabled_packs"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "vanilla"
+placeholder_text = "datapack1, datapack2"
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/enabled_packs"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Create a comma-separated list of
+datapacks that are enabled
+during world creation."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="max_chained_neighbor" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/max_chained_neighbor"]
+layout_mode = 2
+text = "Max chained neighbor updates"
+label_settings = ExtResource("6_8v02b")
+
+[node name="max-chained-neighbor-updates" type="SpinBox" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/max_chained_neighbor"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+value = 100.0
+allow_greater = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/max_chained_neighbor"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Limiting the amount of consecutive neighbor
+updates before skipping additional ones.
+Negative values remove the limit."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="prevent_proxy" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/prevent_proxy"]
+layout_mode = 2
+text = "Prevent proxy connections"
+label_settings = ExtResource("6_8v02b")
+
+[node name="prevent-proxy" type="CheckButton" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/prevent_proxy"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/prevent_proxy"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "If the ISP/AS sent from the server is different from the 
+one from Mojang Studios' authentication server, the
+player is kicked."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="use_native_transport" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/use_native_transport"]
+layout_mode = 2
+text = "Use native transport"
+label_settings = ExtResource("6_8v02b")
+
+[node name="use-native-transport" type="CheckButton" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/use_native_transport"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="mcon/vbox/tcon/Server Properties/vbox/scon/vbox/technical_con/use_native_transport"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "When ON, optimizes packet sending/ receiving on Linux."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="mcon/vbox/tcon/Server Properties/vbox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="save_server_properties" type="Button" parent="mcon/vbox/tcon/Server Properties/vbox/HBoxContainer"]
+layout_mode = 2
+tooltip_text = "Server property changes require
+a server restart to take effect!"
+text = "Save settings"
+
+[node name="reset_default_settings" type="Button" parent="mcon/vbox/tcon/Server Properties/vbox/HBoxContainer"]
+layout_mode = 2
+text = "Reset to default settings"
+
+[node name="Whitelist" type="PanelContainer" parent="mcon/vbox/tcon"]
+visible = false
+layout_mode = 2
+script = ExtResource("9_alug2")
+metadata/_tab_index = 3
+
+[node name="mcon" type="MarginContainer" parent="mcon/vbox/tcon/Whitelist"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="vbox" type="VBoxContainer" parent="mcon/vbox/tcon/Whitelist/mcon"]
+layout_mode = 2
+
+[node name="scon" type="ScrollContainer" parent="mcon/vbox/tcon/Whitelist/mcon/vbox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="whitelist_playerlist" type="VBoxContainer" parent="mcon/vbox/tcon/Whitelist/mcon/vbox/scon"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="pcon" type="PanelContainer" parent="mcon/vbox/tcon/Whitelist/mcon/vbox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3f547")
+
+[node name="hbox" type="HBoxContainer" parent="mcon/vbox/tcon/Whitelist/mcon/vbox/pcon"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="whitelist_player_name" type="LineEdit" parent="mcon/vbox/tcon/Whitelist/mcon/vbox/pcon/hbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Player_name"
+max_length = 16
+
+[node name="whitelist_player_add" type="Button" parent="mcon/vbox/tcon/Whitelist/mcon/vbox/pcon/hbox"]
+layout_mode = 2
+text = "Add Player"
+
+[node name="World Management" type="PanelContainer" parent="mcon/vbox/tcon"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+script = ExtResource("13_bd8x2")
+metadata/_tab_index = 4
+
+[node name="mcon" type="MarginContainer" parent="mcon/vbox/tcon/World Management"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="vbox" type="VBoxContainer" parent="mcon/vbox/tcon/World Management/mcon"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="mcon/vbox/tcon/World Management/mcon/vbox"]
+layout_mode = 2
+
+[node name="create_new_world" type="Button" parent="mcon/vbox/tcon/World Management/mcon/vbox/HBoxContainer"]
+layout_mode = 2
+text = "Create new world"
+script = ExtResource("14_boaj7")
+
+[node name="create_world_dialog" type="ConfirmationDialog" parent="mcon/vbox/tcon/World Management/mcon/vbox/HBoxContainer/create_new_world"]
+title = "Create new world"
+initial_position = 2
+size = Vector2i(465, 280)
+ok_button_text = "Create"
+dialog_hide_on_ok = false
+
+[node name="mcon" type="MarginContainer" parent="mcon/vbox/tcon/World Management/mcon/vbox/HBoxContainer/create_new_world/create_world_dialog"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -49.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="scon" type="ScrollContainer" parent="mcon/vbox/tcon/World Management/mcon/vbox/HBoxContainer/create_new_world/create_world_dialog/mcon"]
+layout_mode = 2
+
+[node name="vbox" type="VBoxContainer" parent="mcon/vbox/tcon/World Management/mcon/vbox/HBoxContainer/create_new_world/create_world_dialog/mcon/scon"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="level_name" type="HBoxContainer" parent="mcon/vbox/tcon/World Management/mcon/vbox/HBoxContainer/create_new_world/create_world_dialog/mcon/scon/vbox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/World Management/mcon/vbox/HBoxContainer/create_new_world/create_world_dialog/mcon/scon/vbox/level_name"]
+layout_mode = 2
+text = "World name"
+label_settings = ExtResource("6_8v02b")
+
+[node name="level-name" type="LineEdit" parent="mcon/vbox/tcon/World Management/mcon/vbox/HBoxContainer/create_new_world/create_world_dialog/mcon/scon/vbox/level_name"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "world"
+max_length = 16
+
+[node name="level_seed" type="HBoxContainer" parent="mcon/vbox/tcon/World Management/mcon/vbox/HBoxContainer/create_new_world/create_world_dialog/mcon/scon/vbox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/World Management/mcon/vbox/HBoxContainer/create_new_world/create_world_dialog/mcon/scon/vbox/level_seed"]
+layout_mode = 2
+text = "Level seed"
+label_settings = ExtResource("6_8v02b")
+
+[node name="level-seed" type="LineEdit" parent="mcon/vbox/tcon/World Management/mcon/vbox/HBoxContainer/create_new_world/create_world_dialog/mcon/scon/vbox/level_seed"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+placeholder_text = "8436084"
+max_length = 19
+
+[node name="randomize_seed" type="Button" parent="mcon/vbox/tcon/World Management/mcon/vbox/HBoxContainer/create_new_world/create_world_dialog/mcon/scon/vbox/level_seed"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Randomize"
+
+[node name="info" type="TextureRect" parent="mcon/vbox/tcon/World Management/mcon/vbox/HBoxContainer/create_new_world/create_world_dialog/mcon/scon/vbox/level_seed"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Sets the world seed value.
+If left blank, will be a random seed."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="level_type" type="HBoxContainer" parent="mcon/vbox/tcon/World Management/mcon/vbox/HBoxContainer/create_new_world/create_world_dialog/mcon/scon/vbox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/World Management/mcon/vbox/HBoxContainer/create_new_world/create_world_dialog/mcon/scon/vbox/level_type"]
+layout_mode = 2
+text = "Level Type"
+label_settings = ExtResource("6_8v02b")
+
+[node name="level-type" type="OptionButton" parent="mcon/vbox/tcon/World Management/mcon/vbox/HBoxContainer/create_new_world/create_world_dialog/mcon/scon/vbox/level_type"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+selected = 0
+item_count = 5
+popup/item_0/text = "normal"
+popup/item_1/text = "flat"
+popup/item_1/id = 1
+popup/item_2/text = "large_biomes"
+popup/item_2/id = 2
+popup/item_3/text = "amplified"
+popup/item_3/id = 3
+popup/item_4/text = "single_biome_surface"
+popup/item_4/id = 4
+
+[node name="info" type="TextureRect" parent="mcon/vbox/tcon/World Management/mcon/vbox/HBoxContainer/create_new_world/create_world_dialog/mcon/scon/vbox/level_type"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Determines the generator type for the world."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="generate_structures" type="HBoxContainer" parent="mcon/vbox/tcon/World Management/mcon/vbox/HBoxContainer/create_new_world/create_world_dialog/mcon/scon/vbox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/World Management/mcon/vbox/HBoxContainer/create_new_world/create_world_dialog/mcon/scon/vbox/generate_structures"]
+layout_mode = 2
+text = "Generate structures"
+label_settings = ExtResource("6_8v02b")
+
+[node name="generate-structures" type="CheckButton" parent="mcon/vbox/tcon/World Management/mcon/vbox/HBoxContainer/create_new_world/create_world_dialog/mcon/scon/vbox/generate_structures"]
+layout_mode = 2
+size_flags_vertical = 4
+button_pressed = true
+flat = true
+
+[node name="info" type="TextureRect" parent="mcon/vbox/tcon/World Management/mcon/vbox/HBoxContainer/create_new_world/create_world_dialog/mcon/scon/vbox/generate_structures"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+tooltip_text = "When ON, structures (like villages) are generated in new chunks.
+When OFF, structures no longer generate. Dungeons still generate."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="generator_settings" type="HBoxContainer" parent="mcon/vbox/tcon/World Management/mcon/vbox/HBoxContainer/create_new_world/create_world_dialog/mcon/scon/vbox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/World Management/mcon/vbox/HBoxContainer/create_new_world/create_world_dialog/mcon/scon/vbox/generator_settings"]
+layout_mode = 2
+text = "Generator settings"
+label_settings = ExtResource("6_8v02b")
+
+[node name="generator-settings" type="LineEdit" parent="mcon/vbox/tcon/World Management/mcon/vbox/HBoxContainer/create_new_world/create_world_dialog/mcon/scon/vbox/generator_settings"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+placeholder_text = "{}"
+
+[node name="info" type="TextureRect" parent="mcon/vbox/tcon/World Management/mcon/vbox/HBoxContainer/create_new_world/create_world_dialog/mcon/scon/vbox/generator_settings"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Write your own customized world generation settings.
+Must be formatted in JSON format.
+Only works with certain Level Types."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="import_world" type="Button" parent="mcon/vbox/tcon/World Management/mcon/vbox/HBoxContainer"]
+layout_mode = 2
+text = "Import world"
+script = ExtResource("15_ubw7j")
+
+[node name="import_dialog" type="FileDialog" parent="mcon/vbox/tcon/World Management/mcon/vbox/HBoxContainer/import_world"]
+title = "Open a Directory"
+initial_position = 2
+size = Vector2i(730, 466)
+ok_button_text = "Select Current Folder"
+file_mode = 2
+access = 2
+use_native_dialog = true
+
+[node name="view_backups" type="Button" parent="mcon/vbox/tcon/World Management/mcon/vbox/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "View backups"
+script = ExtResource("15_w0cy8")
+
+[node name="view_backups_dialog" type="AcceptDialog" parent="mcon/vbox/tcon/World Management/mcon/vbox/HBoxContainer/view_backups"]
+title = "Backups"
+initial_position = 2
+size = Vector2i(600, 450)
+
+[node name="pcon" type="PanelContainer" parent="mcon/vbox/tcon/World Management/mcon/vbox/HBoxContainer/view_backups/view_backups_dialog"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 592.0
+offset_bottom = 401.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_74eed")
+
+[node name="scon" type="ScrollContainer" parent="mcon/vbox/tcon/World Management/mcon/vbox/HBoxContainer/view_backups/view_backups_dialog/pcon"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="backups_list" type="VBoxContainer" parent="mcon/vbox/tcon/World Management/mcon/vbox/HBoxContainer/view_backups/view_backups_dialog/pcon/scon"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="scon" type="ScrollContainer" parent="mcon/vbox/tcon/World Management/mcon/vbox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="world_list" type="VBoxContainer" parent="mcon/vbox/tcon/World Management/mcon/vbox/scon"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="Settings" type="PanelContainer" parent="mcon/vbox/tcon"]
+visible = false
+layout_mode = 2
+script = ExtResource("13_6sfif")
+metadata/_tab_index = 5
+
+[node name="vbox" type="VBoxContainer" parent="mcon/vbox/tcon/Settings"]
+layout_mode = 2
+
+[node name="scon" type="ScrollContainer" parent="mcon/vbox/tcon/Settings/vbox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="vbox" type="VBoxContainer" parent="mcon/vbox/tcon/Settings/vbox/scon"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="auto_world_backup" type="Label" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox"]
+layout_mode = 2
+text = "Auto world backup"
+label_settings = ExtResource("5_rpu06")
+
+[node name="hbox10" type="HBoxContainer" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox/hbox10"]
+layout_mode = 2
+text = "Backup on server stopped"
+label_settings = ExtResource("6_8v02b")
+
+[node name="stop-backup" type="CheckButton" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox/hbox10"]
+layout_mode = 2
+flat = true
+
+[node name="hbox5" type="HBoxContainer" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox/hbox5"]
+layout_mode = 2
+text = "Enable auto-backup"
+label_settings = ExtResource("6_8v02b")
+
+[node name="auto-backup" type="CheckButton" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox/hbox5"]
+layout_mode = 2
+flat = true
+
+[node name="hbox" type="HBoxContainer" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox/hbox"]
+layout_mode = 2
+text = "Backup directory"
+label_settings = ExtResource("6_8v02b")
+
+[node name="backup-dir" type="Button" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox/hbox"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Path-to-Dir"
+script = ExtResource("14_avs1i")
+
+[node name="backup_select" type="FileDialog" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox/hbox/backup-dir"]
+title = "Open a Directory"
+size = Vector2i(348, 175)
+ok_button_text = "Select Current Folder"
+file_mode = 2
+access = 2
+use_native_dialog = true
+
+[node name="backup-freq" type="HBoxContainer" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox/backup-freq"]
+layout_mode = 2
+text = "Backup frequency"
+label_settings = ExtResource("6_8v02b")
+
+[node name="num" type="SpinBox" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox/backup-freq"]
+layout_mode = 2
+min_value = 1.0
+value = 1.0
+allow_greater = true
+
+[node name="time_unit" type="OptionButton" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox/backup-freq"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+selected = 2
+item_count = 3
+popup/item_0/text = "minutes"
+popup/item_1/text = "hours"
+popup/item_1/id = 1
+popup/item_2/text = "days"
+popup/item_2/id = 2
+
+[node name="info" type="TextureRect" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox/backup-freq"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+tooltip_text = "When set to days, backups occur at midnight relative to system time."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="backup-limit" type="HBoxContainer" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox/backup-limit"]
+layout_mode = 2
+text = "Backup limit"
+label_settings = ExtResource("6_8v02b")
+
+[node name="num" type="SpinBox" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox/backup-limit"]
+layout_mode = 2
+min_value = 1.0
+value = 1.0
+allow_greater = true
+
+[node name="info" type="TextureRect" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox/backup-limit"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+tooltip_text = "Set the max amount of backups. When the limit is reached,
+the oldest backup is deleted when a new backup is created."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="h" type="HSeparator" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox"]
+layout_mode = 2
+text = "Server uptime schedule"
+label_settings = ExtResource("5_rpu06")
+
+[node name="hbox3" type="HBoxContainer" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox/hbox3"]
+layout_mode = 2
+text = "Enable schedule"
+label_settings = ExtResource("6_8v02b")
+
+[node name="enable-schedule" type="CheckButton" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox/hbox3"]
+layout_mode = 2
+flat = true
+
+[node name="schedule-time" type="HBoxContainer" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox/schedule-time"]
+layout_mode = 2
+text = "Startup time"
+label_settings = ExtResource("6_8v02b")
+
+[node name="start-time" type="HBoxContainer" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox/schedule-time"]
+layout_mode = 2
+
+[node name="hrs" type="SpinBox" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox/schedule-time/start-time"]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 4
+theme_override_icons/updown = SubResource("ImageTexture_d1bbx")
+max_value = 24.0
+value = 1.0
+
+[node name="Label3" type="Label" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox/schedule-time/start-time"]
+layout_mode = 2
+text = ":"
+label_settings = ExtResource("6_8v02b")
+
+[node name="mins" type="SpinBox" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox/schedule-time/start-time"]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 4
+theme_override_icons/updown = SubResource("ImageTexture_d1bbx")
+max_value = 59.0
+
+[node name="Label2" type="Label" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox/schedule-time"]
+layout_mode = 2
+text = "Shutdown time"
+
+[node name="end-time" type="HBoxContainer" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox/schedule-time"]
+layout_mode = 2
+
+[node name="hrs" type="SpinBox" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox/schedule-time/end-time"]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 4
+theme_override_icons/updown = SubResource("ImageTexture_d1bbx")
+max_value = 24.0
+value = 1.0
+
+[node name="Label4" type="Label" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox/schedule-time/end-time"]
+layout_mode = 2
+text = ":"
+label_settings = ExtResource("6_8v02b")
+
+[node name="mins" type="SpinBox" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox/schedule-time/end-time"]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 4
+theme_override_icons/updown = SubResource("ImageTexture_d1bbx")
+max_value = 59.0
+
+[node name="info" type="TextureRect" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox/schedule-time"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+tooltip_text = "Times are relative to your system time."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="h2" type="HSeparator" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox"]
+layout_mode = 2
+text = "Performance settings"
+label_settings = ExtResource("5_rpu06")
+
+[node name="hbox7" type="HBoxContainer" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox/hbox7"]
+layout_mode = 2
+text = "Allocated RAM"
+label_settings = ExtResource("6_8v02b")
+
+[node name="allocated-ram" type="SpinBox" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox/hbox7"]
+layout_mode = 2
+min_value = 1.0
+max_value = 64.0
+value = 1.0
+suffix = "GB"
+
+[node name="TextureRect2" type="TextureRect" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox/hbox7"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+tooltip_text = "Changes require a server restart!"
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="hbox6" type="HBoxContainer" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox/hbox6"]
+layout_mode = 2
+text = "Restart server on crash"
+label_settings = ExtResource("6_8v02b")
+
+[node name="auto-restart" type="CheckButton" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox/hbox6"]
+layout_mode = 2
+flat = true
+
+[node name="hbox8" type="HBoxContainer" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox/hbox8"]
+layout_mode = 2
+text = "Auto-update to latest Minecraft version"
+label_settings = ExtResource("6_8v02b")
+
+[node name="auto-update" type="CheckButton" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox/hbox8"]
+layout_mode = 2
+flat = true
+
+[node name="TextureRect3" type="TextureRect" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox/hbox8"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+tooltip_text = "Updates the server automatically if it detects
+that a new stable Minecraft version is available.
+Excludes snapshots."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="Label3" type="Label" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox"]
+layout_mode = 2
+text = "Miscellaneous"
+label_settings = ExtResource("5_rpu06")
+
+[node name="h3" type="HSeparator" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox"]
+layout_mode = 2
+
+[node name="hbox9" type="HBoxContainer" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox/hbox9"]
+layout_mode = 2
+text = "Auto-launch on start-up"
+label_settings = ExtResource("6_8v02b")
+
+[node name="auto-startup" type="CheckButton" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox/hbox9"]
+layout_mode = 2
+flat = true
+
+[node name="TextureRect3" type="TextureRect" parent="mcon/vbox/tcon/Settings/vbox/scon/vbox/hbox9"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+tooltip_text = "The management program and the Minecraft server
+will start on your PC start up."
+texture = ExtResource("5_yhrgb")
+expand_mode = 1
+
+[node name="hbox" type="HBoxContainer" parent="mcon/vbox/tcon/Settings/vbox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="save_settings" type="Button" parent="mcon/vbox/tcon/Settings/vbox/hbox"]
+layout_mode = 2
+size_flags_horizontal = 0
+tooltip_text = "Server property changes require
+a server restart to take effect!"
+text = "Save settings"
+
+[node name="restore_defaults" type="Button" parent="mcon/vbox/tcon/Settings/vbox/hbox"]
+layout_mode = 2
+text = "Reset to default settings"
+
+[node name="Server Version" type="PanelContainer" parent="mcon/vbox/tcon"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 6
+
+[node name="mcon" type="MarginContainer" parent="mcon/vbox/tcon/Server Version"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="vbox" type="VBoxContainer" parent="mcon/vbox/tcon/Server Version/mcon"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="mcon/vbox/tcon/Server Version/mcon/vbox"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+text = "Change your server's version to an older or new version. Click \"refresh list\" to fetch the available versions.
+Ensure you have backed up your world before changing versions.
+Note: \"Auto update to latest Minecraft version\" must be disabled in the settings for this to work correctly if you are changing to an older version."
+autowrap_mode = 2
+
+[node name="Label2" type="Label" parent="mcon/vbox/tcon/Server Version/mcon/vbox"]
+layout_mode = 2
+text = "Choose the server version:"
+
+[node name="hbox2" type="HBoxContainer" parent="mcon/vbox/tcon/Server Version/mcon/vbox"]
+layout_mode = 2
+
+[node name="checkbox_releases" type="CheckBox" parent="mcon/vbox/tcon/Server Version/mcon/vbox/hbox2"]
+layout_mode = 2
+button_pressed = true
+text = "Releases"
+
+[node name="checkbox_snapshots" type="CheckBox" parent="mcon/vbox/tcon/Server Version/mcon/vbox/hbox2"]
+layout_mode = 2
+text = "Snapshots"
+
+[node name="checkbox_betas" type="CheckBox" parent="mcon/vbox/tcon/Server Version/mcon/vbox/hbox2"]
+visible = false
+layout_mode = 2
+text = "Betas"
+
+[node name="hbox" type="HBoxContainer" parent="mcon/vbox/tcon/Server Version/mcon/vbox"]
+layout_mode = 2
+
+[node name="version_options" type="OptionButton" parent="mcon/vbox/tcon/Server Version/mcon/vbox/hbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+selected = 0
+item_count = 1
+popup/item_0/text = "Latest"
+
+[node name="refresh_version_list" type="Button" parent="mcon/vbox/tcon/Server Version/mcon/vbox/hbox"]
+layout_mode = 2
+text = "Refrest List"
+script = ExtResource("21_57ohw")
+
+[node name="download_minecraft_ver_button" type="Button" parent="mcon/vbox/tcon/Server Version/mcon/vbox"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+text = "Download version"
+script = ExtResource("22_ex0dp")
+
+[node name="prog_popup" type="Window" parent="mcon/vbox/tcon/Server Version"]
+auto_translate_mode = 1
+initial_position = 2
+size = Vector2i(450, 75)
+visible = false
+exclusive = true
+borderless = true
+
+[node name="ColorRect" type="ColorRect" parent="mcon/vbox/tcon/Server Version/prog_popup"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.27, 0.1575, 1)
+
+[node name="mcon" type="MarginContainer" parent="mcon/vbox/tcon/Server Version/prog_popup"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+
+[node name="vbox" type="VBoxContainer" parent="mcon/vbox/tcon/Server Version/prog_popup/mcon"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="prog_text" type="Label" parent="mcon/vbox/tcon/Server Version/prog_popup/mcon/vbox"]
+layout_mode = 2
+text = "Loading...."
+
+[node name="prog_bar" type="ProgressBar" parent="mcon/vbox/tcon/Server Version/prog_popup/mcon/vbox"]
+layout_mode = 2
+
+[node name="Troubleshooting" type="PanelContainer" parent="mcon/vbox/tcon"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 7
+
+[node name="mcon" type="MarginContainer" parent="mcon/vbox/tcon/Troubleshooting"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="scon" type="ScrollContainer" parent="mcon/vbox/tcon/Troubleshooting/mcon"]
+layout_mode = 2
+
+[node name="vbox" type="VBoxContainer" parent="mcon/vbox/tcon/Troubleshooting/mcon/scon"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="port_forwarding" type="RichTextLabel" parent="mcon/vbox/tcon/Troubleshooting/mcon/scon/vbox"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[b]Why can't others join my server? (Port forwarding)[/b]
+If you can join your server from your computer but others cannot, it's likely because the server's listening port hasn't been forwarded. Port forwarding must be set up manually in your router settings, as this cannot be done through the program. Refer to your router's specific instructions, as the process varies by model."
+fit_content = true
+
+[node name="h" type="HSeparator" parent="mcon/vbox/tcon/Troubleshooting/mcon/scon/vbox"]
+layout_mode = 2
+
+[node name="web_server" type="RichTextLabel" parent="mcon/vbox/tcon/Troubleshooting/mcon/scon/vbox"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[b]Why can't I connect to the web interface from another device?[/b]
+If you can't join the web server from another device, it's likely that you aren't using the right IP address.
+While you can connect using \"localhost\" on the server device, you need to use the device's IP if you are connecting to the web server from an external device.
+This IP should be the same as the 'Default IP' stated in the Dashboard tab. Be sure to include the port number :8081."
+fit_content = true
+
+[node name="h2" type="HSeparator" parent="mcon/vbox/tcon/Troubleshooting/mcon/scon/vbox"]
+layout_mode = 2
+
+[node name="permission_levels" type="RichTextLabel" parent="mcon/vbox/tcon/Troubleshooting/mcon/scon/vbox"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[b]What are permission levels?[/b]
+Permission levels are a set of levels that describe what authority a user has over the world. This includes command execution and bypassing spawn protection.
+
+Levels are as follows:
+[b]Level 1 (moderator)[/b]
+Player can bypass spawn protection
+
+[b]Level 2 (gamemaster)[/b]
+Player or executor can use more commands and use command blocks.
+
+[b]Level 3 (admin)[/b]
+Player or executor can use commands related to multiplayer management.
+
+[b]Level 4 (owner)[/b]
+Player or execute can use all of the commands, including related to server management."
+fit_content = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="mcon/vbox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcon/vbox/HBoxContainer"]
+layout_mode = 2
+text = "v1.0 Beta"
+label_settings = SubResource("LabelSettings_bwhi7")
+vertical_alignment = 1
+
+[node name="notifications_layer" type="CanvasLayer" parent="."]
+
+[node name="scon" type="ScrollContainer" parent="notifications_layer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="notification_layer_list" type="VBoxContainer" parent="notifications_layer/scon"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+alignment = 2
+
+[node name="player_cache" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("10_eqyt2")
+
+[node name="world_backup" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("16_gla40")
+
+[node name="web_server" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("18_rqdo7")
+
+[node name="web_socket" type="Node" parent="web_server"]
+unique_name_in_owner = true
+script = ExtResource("19_q3u8d")

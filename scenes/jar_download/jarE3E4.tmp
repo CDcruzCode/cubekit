@@ -1,0 +1,123 @@
+[gd_scene load_steps=3 format=3 uid="uid://mlwx72188q5r"]
+
+[ext_resource type="Script" path="res://scenes/jar_download/jar_download.gd" id="1_vanil"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ee7u2"]
+font_size = 31
+
+[node name="jar_download" type="ColorRect"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.230315, 0.230315, 0.230315, 1)
+script = ExtResource("1_vanil")
+
+[node name="ccon" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="vbox" type="VBoxContainer" parent="ccon"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ccon/vbox"]
+layout_mode = 2
+text = "MC Server Launcher"
+label_settings = SubResource("LabelSettings_ee7u2")
+
+[node name="Label2" type="Label" parent="ccon/vbox"]
+layout_mode = 2
+text = "Choose the server version:"
+
+[node name="hbox2" type="HBoxContainer" parent="ccon/vbox"]
+layout_mode = 2
+
+[node name="checkbox_releases" type="CheckBox" parent="ccon/vbox/hbox2"]
+layout_mode = 2
+button_pressed = true
+text = "Releases"
+
+[node name="checkbox_snapshots" type="CheckBox" parent="ccon/vbox/hbox2"]
+layout_mode = 2
+text = "Snapshots"
+
+[node name="checkbox_betas" type="CheckBox" parent="ccon/vbox/hbox2"]
+visible = false
+layout_mode = 2
+text = "Betas"
+
+[node name="hbox" type="HBoxContainer" parent="ccon/vbox"]
+layout_mode = 2
+
+[node name="version_options" type="OptionButton" parent="ccon/vbox/hbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+selected = 0
+item_count = 1
+popup/item_0/text = "Latest"
+
+[node name="button_refresh_list" type="Button" parent="ccon/vbox/hbox"]
+layout_mode = 2
+text = "Refrest List"
+
+[node name="Label3" type="Label" parent="ccon/vbox"]
+layout_mode = 2
+text = "Choose download location:"
+
+[node name="button_file_location" type="Button" parent="ccon/vbox"]
+layout_mode = 2
+text = "Download Location"
+
+[node name="button_download_version" type="Button" parent="ccon/vbox"]
+layout_mode = 2
+text = "Confirm"
+
+[node name="dialog_download_location" type="FileDialog" parent="."]
+title = "Open a Directory"
+initial_position = 2
+size = Vector2i(303, 180)
+ok_button_text = "Select Current Folder"
+file_mode = 2
+access = 2
+
+[node name="prog_popup" type="Window" parent="."]
+initial_position = 2
+size = Vector2i(450, 75)
+visible = false
+exclusive = true
+borderless = true
+
+[node name="ColorRect" type="ColorRect" parent="prog_popup"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.248116, 0.465516, 0.50986, 1)
+
+[node name="mcon" type="MarginContainer" parent="prog_popup"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+
+[node name="vbox" type="VBoxContainer" parent="prog_popup/mcon"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="prog_popup/mcon/vbox"]
+layout_mode = 2
+text = "Loading...."
+
+[node name="prog_bar" type="ProgressBar" parent="prog_popup/mcon/vbox"]
+layout_mode = 2

@@ -1,0 +1,213 @@
+[gd_scene load_steps=6 format=3 uid="uid://mlwx72188q5r"]
+
+[ext_resource type="Script" path="res://scenes/jar_download/jar_download.gd" id="1_vanil"]
+[ext_resource type="Script" path="res://scenes/jar_download/java_download.gd" id="3_2u8ke"]
+[ext_resource type="Texture2D" uid="uid://cv3dv4o35b71w" path="res://images/cubekit_text_icon.svg" id="3_orx8k"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ee7u2"]
+font_size = 31
+
+[sub_resource type="LabelSettings" id="LabelSettings_j5tds"]
+font_size = 12
+
+[node name="jar_download" type="ColorRect"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.145098, 0.156863, 0.239216, 1)
+script = ExtResource("1_vanil")
+
+[node name="ccon" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="vbox" type="VBoxContainer" parent="ccon"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ccon/vbox"]
+layout_mode = 2
+text = "Server Setup"
+label_settings = SubResource("LabelSettings_ee7u2")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="ccon/vbox"]
+layout_mode = 2
+text = "Choose the server version:"
+
+[node name="hbox2" type="HBoxContainer" parent="ccon/vbox"]
+layout_mode = 2
+
+[node name="checkbox_releases" type="CheckBox" parent="ccon/vbox/hbox2"]
+layout_mode = 2
+button_pressed = true
+text = "Releases"
+
+[node name="checkbox_snapshots" type="CheckBox" parent="ccon/vbox/hbox2"]
+layout_mode = 2
+text = "Snapshots"
+
+[node name="checkbox_betas" type="CheckBox" parent="ccon/vbox/hbox2"]
+visible = false
+layout_mode = 2
+text = "Betas"
+
+[node name="hbox" type="HBoxContainer" parent="ccon/vbox"]
+layout_mode = 2
+
+[node name="version_options" type="OptionButton" parent="ccon/vbox/hbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+selected = 0
+item_count = 1
+popup/item_0/text = "Latest"
+
+[node name="button_refresh_list" type="Button" parent="ccon/vbox/hbox"]
+layout_mode = 2
+text = "Refrest List"
+
+[node name="Label3" type="Label" parent="ccon/vbox"]
+layout_mode = 2
+text = "Choose download location:"
+
+[node name="Label4" type="Label" parent="ccon/vbox"]
+layout_mode = 2
+text = "All MC Server files will be placed in your selected folder."
+label_settings = SubResource("LabelSettings_j5tds")
+
+[node name="button_file_location" type="Button" parent="ccon/vbox"]
+layout_mode = 2
+text = "Download Location"
+
+[node name="button_download_version" type="Button" parent="ccon/vbox"]
+layout_mode = 2
+text = "Confirm"
+
+[node name="dialog_download_location" type="FileDialog" parent="."]
+title = "Open a Directory"
+initial_position = 2
+size = Vector2i(303, 180)
+ok_button_text = "Select Current Folder"
+file_mode = 2
+access = 2
+use_native_dialog = true
+
+[node name="prog_popup" type="Window" parent="."]
+initial_position = 2
+size = Vector2i(450, 75)
+visible = false
+exclusive = true
+borderless = true
+
+[node name="ColorRect" type="ColorRect" parent="prog_popup"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.27, 0.1575, 1)
+
+[node name="mcon" type="MarginContainer" parent="prog_popup"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+
+[node name="vbox" type="VBoxContainer" parent="prog_popup/mcon"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="prog_text" type="Label" parent="prog_popup/mcon/vbox"]
+layout_mode = 2
+text = "Loading...."
+
+[node name="prog_bar" type="ProgressBar" parent="prog_popup/mcon/vbox"]
+layout_mode = 2
+
+[node name="eula_popup" type="ConfirmationDialog" parent="."]
+initial_position = 2
+size = Vector2i(395, 200)
+unresizable = true
+borderless = true
+always_on_top = true
+max_size = Vector2i(32768, 200)
+ok_button_text = "Accept"
+dialog_hide_on_ok = false
+dialog_close_on_escape = false
+dialog_autowrap = true
+cancel_button_text = "Decline"
+
+[node name="vbox" type="VBoxContainer" parent="eula_popup"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 387.0
+offset_bottom = 151.0
+
+[node name="Label" type="Label" parent="eula_popup/vbox"]
+layout_mode = 2
+text = "EULA Acceptance"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="eula_popup/vbox"]
+layout_mode = 2
+bbcode_enabled = true
+text = "By clicking \"Accept\" you are indicating your agreement to the Minecraft EULA [url]https://aka.ms/MinecraftEULA[/url]."
+fit_content = true
+shortcut_keys_enabled = false
+drag_and_drop_selection_enabled = false
+
+[node name="setup_complete_popup" type="AcceptDialog" parent="."]
+auto_translate_mode = 1
+initial_position = 2
+size = Vector2i(395, 190)
+unresizable = true
+borderless = true
+always_on_top = true
+dialog_hide_on_ok = false
+dialog_close_on_escape = false
+dialog_autowrap = true
+
+[node name="vbox" type="VBoxContainer" parent="setup_complete_popup"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 387.0
+offset_bottom = 141.0
+
+[node name="Label" type="Label" parent="setup_complete_popup/vbox"]
+layout_mode = 2
+text = "Setup complete!"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="setup_complete_popup/vbox"]
+layout_mode = 2
+bbcode_enabled = true
+text = "All required files have been downloaded! Click OK to go to the dashboard.
+Configure your server settings before starting the server!"
+fit_content = true
+shortcut_keys_enabled = false
+drag_and_drop_selection_enabled = false
+
+[node name="java_download" type="Node" parent="."]
+script = ExtResource("3_2u8ke")
+
+[node name="mcon" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_right = 20.0
+offset_bottom = 20.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+
+[node name="cubekit_logo" type="TextureRect" parent="mcon"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+texture = ExtResource("3_orx8k")
+expand_mode = 5

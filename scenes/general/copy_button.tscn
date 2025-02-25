@@ -1,0 +1,20 @@
+[gd_scene load_steps=6 format=3 uid="uid://busbkd361vxdm"]
+
+[ext_resource type="Texture2D" uid="uid://dkf3revdqlisd" path="res://images/copy_normal.png" id="1_dfcb0"]
+[ext_resource type="Texture2D" uid="uid://be8esfj8yk7q1" path="res://images/copy_icon.png" id="1_vqqwp"]
+[ext_resource type="Script" path="res://scenes/general/copy_button.gd" id="2_5utbq"]
+[ext_resource type="Texture2D" uid="uid://cu457ok6euhr3" path="res://images/copy_pressed.png" id="3_jl4gh"]
+[ext_resource type="Texture2D" uid="uid://bkkwetyar4kdn" path="res://images/copy_disabled.png" id="4_s7fg8"]
+
+[node name="copy_button" type="TextureButton"]
+custom_minimum_size = Vector2(32, 32)
+focus_mode = 0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("1_dfcb0")
+texture_pressed = ExtResource("1_vqqwp")
+texture_hover = ExtResource("3_jl4gh")
+texture_disabled = ExtResource("4_s7fg8")
+texture_focused = ExtResource("3_jl4gh")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("2_5utbq")

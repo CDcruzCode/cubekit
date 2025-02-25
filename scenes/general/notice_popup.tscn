@@ -1,0 +1,72 @@
+[gd_scene load_steps=4 format=3 uid="uid://bdn83qogywtri"]
+
+[ext_resource type="Script" path="res://scenes/general/notice_popup.gd" id="1_f7srr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6vtxi"]
+bg_color = Color(0.233925, 0.233925, 0.233925, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dnqq4"]
+
+[node name="notice_popup" type="MarginContainer"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -650.0
+offset_top = -63.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 10
+script = ExtResource("1_f7srr")
+
+[node name="pcon" type="PanelContainer" parent="."]
+layout_mode = 2
+mouse_filter = 1
+theme_type_variation = &"notice_popup"
+theme_override_styles/panel = SubResource("StyleBoxFlat_6vtxi")
+
+[node name="progress_banner" type="ColorRect" parent="pcon"]
+visible = false
+self_modulate = Color(1, 1, 1, 0.0392157)
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="hbox" type="HBoxContainer" parent="pcon"]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="indicator" type="ColorRect" parent="pcon/hbox"]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 1
+color = Color(0.87451, 0.466667, 0.596078, 1)
+
+[node name="popup_text" type="RichTextLabel" parent="pcon/hbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 1
+theme_override_styles/normal = SubResource("StyleBoxEmpty_dnqq4")
+bbcode_enabled = true
+text = "A new update is available, visit quasai.cdcruz.com to download!"
+fit_content = true
+scroll_active = false
+
+[node name="close_button" type="Button" parent="pcon/hbox"]
+custom_minimum_size = Vector2(33, 33)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.870588, 0.870588, 0.870588, 1)
+text = "╳"
+flat = true

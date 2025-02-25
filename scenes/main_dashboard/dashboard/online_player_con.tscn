@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3 uid="uid://cm6xutj80lxfm"]
+
+[ext_resource type="Texture2D" uid="uid://cgh7w16lfvvtl" path="res://images/missing_skull.png" id="1_ml3fj"]
+[ext_resource type="LabelSettings" uid="uid://b2u3830xnev1g" path="res://scenes/main_dashboard/form_label.tres" id="2_gd6od"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3p5of"]
+content_margin_bottom = 8.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_bottom = 1
+border_color = Color(0.589096, 0.589096, 0.589095, 1)
+
+[node name="online_player_con" type="PanelContainer"]
+theme_override_styles/panel = SubResource("StyleBoxFlat_3p5of")
+
+[node name="hbox" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="player_skull" type="TextureRect" parent="hbox"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("1_ml3fj")
+expand_mode = 1
+
+[node name="player_name" type="Label" parent="hbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "CDcruz1548795146"
+label_settings = ExtResource("2_gd6od")
+
+[node name="time_online" type="Label" parent="hbox"]
+visible = false
+layout_mode = 2
+text = "0m"
+label_settings = ExtResource("2_gd6od")
